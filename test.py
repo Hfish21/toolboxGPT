@@ -1,8 +1,9 @@
 import os
 import openai
 from pprint import pprint
-openai.api_key = "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"
+import os 
 
+openai.api_key = os.getenv("OPENAPI_KEY")
 
 # Takes in a message log and has the agent take a step, returns the message log containing the fix
 def take_step(message_log, request):
@@ -27,7 +28,6 @@ input_data = {
     'firstname' : 'Hayden', 
     'lastname' : 'Salmon',
     'address' : "3227 Gardner Road, Lakeland Florida 33810"
-
 }
 
 output_data = {
@@ -86,6 +86,10 @@ while correct == False and  i < layers:
         else:
             correct = True
             print("CORRECT!!!")
+            print(f"Input Data: {input_data}")
+            print(' ')
+            print(f"Output Data: {output_data}")
+            print(code)
             i += 1 
 
     except Exception as e:
@@ -95,5 +99,5 @@ while correct == False and  i < layers:
             re-write the script with the error fixed
         '''
         message_log = take_step(message_log, request)
-        print("EXECUTION ERROR")
+        print(f"EXECUTION ERROR - {str(e)}")
         i += 1 
